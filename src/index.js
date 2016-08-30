@@ -8,12 +8,10 @@ let memory = {};
 
 function expressCriticalCSS({
   override = true,
-  cssFile = ''
+  cssFile
 } = {}) {
 
-  const getClassSelectors = function({
-    content = ''
-  }) {
+  const getClassSelectors = function({ content = '' }) {
     let result = [];
     let matches;
     while (matches = RE_CLASS.exec(content)) {
@@ -57,8 +55,11 @@ function expressCriticalCSS({
         const classSelectors = getClassSelectors({ content: html });
         const memoryKey = classSelectors.join('');
 
-        if (memory[memoryKey]) {
-          res.send(html.replace(/(<head>.?)/g, `$1${memory[memoryKey]}`));
+        if (memory[memoryKey] || !cssFile) {
+          if(!cssFile) {
+            console.warning('express-inline-css: cssFile is required');
+          }
+          res.send(html.replace(/(<head>.?)/g, `$1${memory[memoryKey] || ''}`));
         } else {
           getStylesheet().then(stylesheet => {
             const cssRules = extractCss({ stylesheet, selectors: classSelectors
@@ -74,7 +75,7 @@ function expressCriticalCSS({
     };
 
     if (override === false) {
-      res.renderCritical = function(view, renderOpts, callback) {
+      res.renderInlineCSS = function(view, renderOpts, callback) {
         this.render(view, renderOpts, renderCallback(callback));
       };
     } else {

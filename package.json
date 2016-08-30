@@ -1,10 +1,27 @@
 {
   "name": "express-inline-css",
-  "version": "1.0.0",
-  "author": "Jordi López <jlopezxs@gmail.com>",
+  "version": "1.1.0",
   "description": "Express inline CSS generator",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "main": "index.js",
+  "author": {
+    "name": "Jordi López",
+    "email": "jlopezxs@gmail.com",
+    "url": "http://jlopezxs.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlopezxs/express-inline-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jlopezxs/express-inline-css/issues"
+  },
+  "keywords": [
+    "inline",
+    "css",
+    "critical",
+    "express"
+  ],
   "scripts": {
     "example": "npm run build && node example/index",
     "build": "rm -rf lib && babel src -d lib --source-maps",
@@ -24,6 +41,9 @@
   "dependencies": {
     "critical": "^0.7.3",
     "lodash": "^4.15.0",
+  },
+  "engines": {
+    "node": ">= 0.10"
   },
   "babel": {
     "presets": [
