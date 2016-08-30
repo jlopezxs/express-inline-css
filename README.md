@@ -32,8 +32,8 @@ inlineCSS({ cssFile, [override] });
 <!-- {.font-large} -->
 where:
 
-- `cssFile`: Path of the final css.
-- `override` (optional): It brings you the possibility override the method render or use renderInlineCSS.
+- `cssFile`: Path of the final css file where rules are taken out.
+- `override` (optional): It brings you the possibility to override the method render or use renderInlineCSS.
 
 ## License
 
