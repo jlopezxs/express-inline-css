@@ -1,0 +1,31 @@
+{
+  "name": "loggy",
+  "version": "1.0.0",
+  "author": "Jordi López <jlopezxs@gmail.com>",
+  "description": "Express Critical CSS generator",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "scripts": {
+    "example": "npm run build && node example/index",
+    "build": "rm -rf lib && babel src -d lib --source-maps",
+    "prerelease": "npm run build",
+    "release": "npm version -m \"New version: %s\"",
+    "postrelease": "npm run push && npm publish",
+    "push": "git push origin master && git push origin --tags"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.9.0",
+    "swig": "^1.4.2",
+    "express": "^4.14.0"
+  },
+  "dependencies": {
+    "critical": "^0.7.3"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}
