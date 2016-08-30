@@ -1,46 +1,76 @@
-import critical from 'critical';
+import { uniq, flatten } from 'lodash';
+import fs from 'fs';
+
+const RE_CLASS = /class="([^"]*)"/gi;
+const DEFAULT_SELECTORS = ['html', 'body', 'h1', 'h2', 'h3'];
+
+let memory = {};
 
 function expressCriticalCSS({
   override = true,
-  base = '',
-  width = 1300,
-  height = 900,
-  minify = true
+  cssFile = ''
 } = {}) {
+
+  const getClassSelectors = function({
+    content = ''
+  }) {
+    let result = [];
+    let matches;
+    while (matches = RE_CLASS.exec(content)) {
+      result.push(matches[1].split(' '));
+    }
+    return uniq(flatten(result)).map(className => `.${className}`).concat(DEFAULT_SELECTORS);
+  };
+
+  const getStylesheet = function() {
+    return new Promise((resolve, reject) => {
+      fs.readFile(cssFile, 'utf8', (err, file) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(file);
+      });
+    });
+  };
+
+  const extractCss = function({ stylesheet = '', selectors = []}) {
+    let styles = stylesheet.split('}');
+    let styleRules = [];
+    styles.forEach(style => {
+      style += '}';
+      style = style.replace(/\r\n|\n|\r|\s\s+/gm, ' ');
+      selectors.forEach(selector => {
+        if (style.indexOf('@media') === -1 && style.indexOf(selector) !== -1) {
+          styleRules.push(style);
+        }
+      });
+    });
+    return styleRules;
+  };
 
   function crticalCSS(req, res, next) {
     const renderCallback = callback => {
-      if (typeof callback === 'undefined') {
-        return (err, html) => {
-          if (err) {
+      return (err, html) => {
+        if (err) {
+          return next(err);
+        }
+        const classSelectors = getClassSelectors({ content: html });
+        const memoryKey = classSelectors.join('');
+
+        if (memory[memoryKey]) {
+          res.send(html.replace(/(<head>.?)/g, `$1${memory[memoryKey]}`));
+        } else {
+          getStylesheet().then(stylesheet => {
+            const cssRules = extractCss({ stylesheet, selectors: classSelectors
+            }).join('');
+            const style = `<style>${cssRules}</style>`;
+            memory[memoryKey] = style;
+            res.send(html.replace(/(<head>.?)/g, `$1${style}`));
+          }).catch(err => {
             return next(err);
-          }
-          critical.generate({
-            base,
-            html,
-            width,
-            height,
-            minify
-          }, function(err, output) {
-            const style = `<style>${output}</style>`;
-            res.send(html.replace(/(<head>.?)/g,`$1${style}`));
           });
-        };
-      } else {
-        return (err, html) => {
-          if (html) {
-            critical.generate({
-              base,
-              html,
-              width,
-              height
-            }, function(err, output) {
-              const style = `<style>${output}</style>`;
-              res.send(html.replace(/(<head>.?)/g,`$1${style}`));
-            });
-          }
-        };
-      }
+        }
+      };
     };
 
     if (override === false) {
