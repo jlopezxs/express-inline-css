@@ -1,5 +1,5 @@
 {
-  "name": "loggy",
+  "name": "express-critical-css",
   "version": "1.0.0",
   "author": "Jordi López <jlopezxs@gmail.com>",
   "description": "Express Critical CSS generator",
