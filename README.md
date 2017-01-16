@@ -1,5 +1,5 @@
 # express-inline-css
-Express middleware to inject css inline to get better render performance
+> Express middleware to inject css inline to get better render performance
 
 ## Installation
 
