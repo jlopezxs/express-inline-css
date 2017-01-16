@@ -1,6 +1,6 @@
 {
   "name": "express-inline-css",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Express inline CSS generator",
   "license": "MIT",
   "main": "index.js",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "critical": "^0.7.3",
-    "lodash": "^4.15.0",
+    "lodash": "^4.15.0"
   },
   "engines": {
     "node": ">= 0.10"
