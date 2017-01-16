@@ -1,4 +1,5 @@
-import { uniq, flatten } from 'lodash';
+import flatten  from 'lodash.flatten';
+import uniq  from 'lodash.uniq';
 import fs from 'fs';
 
 const RE_CLASS = /class="([^"]*)"/gi;
