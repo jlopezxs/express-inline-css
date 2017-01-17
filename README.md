@@ -1,5 +1,5 @@
 # express-inline-css
-> Express middleware to inject css inline to get better render performance
+> :zap: Express middleware to generate inline critical rendering CSS to improve render performance
 
 ## Installation
 
