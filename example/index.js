@@ -1,6 +1,5 @@
 const express = require('express');
 const swig = require('swig');
-const fetch = require('node-fetch');
 const criticalCss = require('../lib/index').default;
 const PORT = 3000;
 const app = express();
@@ -26,5 +25,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`CriticalCSS Test listen on port ${PORT}`);
 });
-
-fetch(`http://localhost:${PORT}/`);

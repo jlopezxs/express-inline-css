@@ -5,13 +5,13 @@ import fs from 'fs'
 const RE_CLASS = /class="([^"]*)"/gi
 const DEFAULT_SELECTORS = ['html', 'body', 'h1', 'h2', 'h3']
 
-let memory = {}
+let cache = {}
 
 function expressCriticalCSS ({
   override = true,
-  cssFile
+  cssFilePath
 } = {}) {
-  const getClassSelectors = function ({ content = '' }) {
+  function _getClassSelectors ({ content = '' }) {
     let result = []
     let matches
     while (matches) {
@@ -21,9 +21,9 @@ function expressCriticalCSS ({
     return uniq(flatten(result)).map(className => `.${className}`).concat(DEFAULT_SELECTORS)
   }
 
-  const getStylesheet = function () {
+  function _getStylesheet () {
     return new Promise((resolve, reject) => {
-      fs.readFile(cssFile, 'utf8', (err, file) => {
+      fs.readFile(cssFilePath, 'utf8', (err, file) => {
         if (err) {
           return reject(err)
         }
@@ -32,7 +32,7 @@ function expressCriticalCSS ({
     })
   }
 
-  const extractCss = function ({ stylesheet = '', selectors = [] }) {
+  function _extractCss ({ stylesheet = '', selectors = [] }) {
     let styles = stylesheet.split('}')
     let styleRules = []
     styles.forEach(style => {
@@ -53,20 +53,20 @@ function expressCriticalCSS ({
         if (err) {
           return next(err)
         }
-        const classSelectors = getClassSelectors({ content: html })
-        const memoryKey = classSelectors.join('')
+        const classSelectors = _getClassSelectors({ content: html })
+        const cacheKey = classSelectors.join('')
 
-        if (memory[memoryKey] || !cssFile) {
-          if (!cssFile) {
-            console.warning('express-inline-css: cssFile is required')
+        if (cache[cacheKey] || !cssFilePath) {
+          if (!cssFilePath) {
+            console.warning('express-inline-css: cssFilePath is required')
           }
-          res.send(html.replace(/(<head>.?)/g, `$1${memory[memoryKey] || ''}`))
+          res.send(html.replace(/(<head>.?)/g, `$1${cache[cacheKey] || ''}`))
         } else {
-          getStylesheet().then(stylesheet => {
-            const cssRules = extractCss({ stylesheet, selectors: classSelectors
+          _getStylesheet().then(stylesheet => {
+            const cssRules = _extractCss({ stylesheet, selectors: classSelectors
             }).join('')
             const style = `<style>${cssRules}</style>`
-            memory[memoryKey] = style
+            cache[cacheKey] = style
             res.send(html.replace(/(<head>.?)/g, `$1${style}`))
           }).catch(err => {
             return next(err)
@@ -80,9 +80,9 @@ function expressCriticalCSS ({
         this.render(view, renderOpts, renderCallback(callback))
       }
     } else {
-      res.oldRender = res.render
+      res.oldRenderMethod = res.render
       res.render = function (view, renderOpts, callback) {
-        this.oldRender(view, renderOpts, renderCallback(callback))
+        this.oldRenderMethod(view, renderOpts, renderCallback(callback))
       }
     }
 

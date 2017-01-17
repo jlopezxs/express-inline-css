@@ -17,7 +17,7 @@ const app = express();
 
 app.use(inlineCSS({
   override: true,
-  cssFile: '../client/public/css/style.css'
+  cssFilePath: '../client/public/css/style.css'
 }));
 
 app.get('/', (req, res) => {

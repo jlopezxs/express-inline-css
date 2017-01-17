@@ -1,6 +1,6 @@
 {
   "name": "express-inline-css",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Express inline CSS generator",
   "license": "MIT",
   "main": "index.js",
@@ -32,14 +32,9 @@
     "push": "git push origin master && git push origin --tags"
   },
   "devDependencies": {
-    "babel-cli": "^6.10.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-register": "^6.9.0",
-    "eslint": "^2.13.1",
-    "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.9.2",
     "express": "^4.14.0",
-    "node-fetch": "^1.6.0",
     "standard": "^8.6.0",
     "swig": "^1.4.2"
   },
