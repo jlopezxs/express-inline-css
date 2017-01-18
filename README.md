@@ -28,11 +28,11 @@ app.get('/', (req, res) => {
 
 ## Usage
 
-inlineCSS({ cssFile, [override] });
+inlineCSS({ cssFilePath, [override] });
 <!-- {.font-large} -->
 where:
 
-- `cssFile`: Path of the final css file where rules are taken out.
+- `cssFilePath`: Path of the final css file where rules are taken out.
 - `override` (optional): It brings you the possibility to override the method render or use renderInlineCSS.
 
 ## License
