@@ -1,6 +1,7 @@
-import flatten from 'lodash.flatten'
-import uniq from 'lodash.uniq'
-import fs from 'fs'
+'use strict'
+const flatten = require('lodash.flatten')
+const uniq = require('lodash.uniq')
+const fs = require('fs')
 
 const RE_CLASS = /class="([^"]*)"/gi
 const DEFAULT_SELECTORS = ['html', 'body', 'h1', 'h2', 'h3']
@@ -92,4 +93,4 @@ function expressCriticalCSS ({
   return (crticalCSS)
 }
 
-export default expressCriticalCSS
+module.exports = expressCriticalCSS
