@@ -61,14 +61,14 @@ function expressCriticalCSS ({
           if (!cssFilePath) {
             console.warning('express-inline-css: cssFilePath is required')
           }
-          res.send(html.replace(/(<head>.?)/g, `$1${cache[cacheKey] || ''}`))
+          res.send(html.replace(/(<\/head>)/i, `${cache[cacheKey] || ''}$1`))
         } else {
           _getStylesheet().then(stylesheet => {
             const cssRules = _extractCss({ stylesheet, selectors: classSelectors
             }).join('')
             const style = `<style>${cssRules}</style>`
             cache[cacheKey] = style
-            res.send(html.replace(/(<head>.?)/g, `$1${style}`))
+            res.send(html.replace(/(<\/head>)/i, `${style}$1`))
           }).catch(err => {
             return next(err)
           })
