@@ -1,6 +1,6 @@
 {
   "name": "express-inline-css",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Express inline CSS generator",
   "license": "MIT",
   "main": "index.js",
