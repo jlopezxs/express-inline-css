@@ -1,0 +1,89 @@
+{
+  "name": "express-inline-css",
+  "version": "1.2.3",
+  "description": "Express inline CSS generator",
+  "license": "MIT",
+  "main": "index.js",
+  "author": {
+    "name": "Jordi López",
+    "email": "jlopezxs@gmail.com",
+    "url": "http://jlopezxs.github.io"
+  },
+  "files": [
+    "src",
+    "dist",
+    "index.js"
+  ],
+  "scripts": {
+    "example": "npm run build && node example/index",
+    "lint": "eslint src/",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:prod": "npm run lint && npm run test  -- --coverage --no-cache",
+    "build": "rm -rf dist && babel src -d dist --source-maps",
+    "cm": "git-cz",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "precommit": "lint-staged",
+    "init": "semantic-release-cli setup"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "conventional-commit-types",
+      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+    }
+  },
+  "lint-staged": {
+    "{src}/**/*.js": [
+      "prettier --write --no-semi --single-quote",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "critical": "^0.9.1",
+    "lodash.flatten": "^4.4.0",
+    "lodash.uniq": "^4.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^4.9.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.2.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "express": "^4.16.2",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^4.3.0",
+    "prettier": "^1.7.4",
+    "semantic-release": "^8.2.0",
+    "semantic-release-cli": "^3.2.2",
+    "swig": "^1.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlopezxs/express-inline-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jlopezxs/express-inline-css/issues"
+  },
+  "keywords": [
+    "inline",
+    "css",
+    "critical",
+    "express"
+  ],
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}

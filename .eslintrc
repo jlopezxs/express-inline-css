@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "standard",
+    "prettier"
+  ],
+  "plugins": [
+    "jest"
+  ],
+  "env": {
+    "jasmine": true
+  }
+}
