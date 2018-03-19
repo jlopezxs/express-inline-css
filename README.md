@@ -5,6 +5,7 @@
 [![Dependencies Status](https://david-dm.org/jlopezxs/express-inline-css/status.svg)](https://david-dm.org/jlopezxs/express-inline-css)
 [![Styled with Prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/jlopezxs/express-inline-css.svg)](https://greenkeeper.io/)
 
 ## Installation
 
